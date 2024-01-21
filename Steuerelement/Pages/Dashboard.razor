@@ -1,0 +1,57 @@
+﻿@page "/"
+@inject Classes.Configs Config;
+@inject Classes.FormatInput Format;
+
+<PageTitle>Zeitsteuerelement</PageTitle>
+
+<h1>Zeiterfassung</h1>
+<div class="container">
+    <label for="input">Zeit</label>
+    <InputText class="form-control" id="input" maxlength="12" @bind-Value="Format.input" />
+</div>
+<div class="d-flex flex-row">
+    <div class="container">
+        <label for="precision">Genauigkeit</label>
+        <InputSelect class="form-select" id="precision" @bind-Value="Format.precision">
+            @foreach (var item in Config.precision)
+            {
+                <option value="@item">@item</option>
+            }
+        </InputSelect>
+    </div>
+    <div class="container">
+        <label for="status">Status</label>
+        <InputSelect class="form-select" id="status" @bind-Value="Format.status">
+            @foreach (var item in Config.status)
+            {
+                <option value="@item">@item</option>
+            }
+        </InputSelect>
+    </div>
+</div>
+<div class="container">
+    <button class="btn btn-primary" @onclick="Format.onClickFormat">Speichern</button>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Eingabe</th>
+            <th>Status</th>
+            <th>Genauigkeit</th>
+            <th>Ausgabe</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var format in Format.timeFormat.Get())
+        {
+            <tr>
+                <td>@format.Input</td>
+                <td>@format.Status</td>
+                <td>@format.Precision</td>
+                <td>@format.Output</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
